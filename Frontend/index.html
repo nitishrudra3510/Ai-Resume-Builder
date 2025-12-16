@@ -1,13 +1,177 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AI Resume Builder</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Resume Builder - Elite 2025</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav id="navbar" class="navbar" style="display: none;">
+    <div class="navbar-container">
+      <div class="navbar-brand">Resume Builder</div>
+      <div class="navbar-menu">
+        <a href="#" id="dashboardLink" class="nav-link">Dashboard</a>
+        <button id="logoutBtn" class="nav-btn logout-btn">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Auth Container (Login/Register) -->
+  <div id="authContainer" class="auth-container">
+    <div class="auth-box">
+      <h1 class="auth-title">AI Resume Builder</h1>
+      <p class="auth-subtitle">Build Professional Resumes with AI</p>
+
+      <!-- Login Form -->
+      <div id="loginForm" class="form-section active">
+        <form id="loginFormEl" class="form">
+          <div class="form-group">
+            <label for="loginEmail">Email</label>
+            <input type="email" id="loginEmail" name="email" required placeholder="you@example.com">
+          </div>
+          <div class="form-group">
+            <label for="loginPassword">Password</label>
+            <input type="password" id="loginPassword" name="password" required placeholder="••••••••">
+          </div>
+          <button type="submit" class="btn btn-primary btn-full">Sign In</button>
+        </form>
+        <p class="form-toggle">Don't have an account? <a href="#" id="toggleToRegister" class="toggle-link">Sign Up</a></p>
+      </div>
+
+      <!-- Register Form -->
+      <div id="registerForm" class="form-section">
+        <form id="registerFormEl" class="form">
+          <div class="form-group">
+            <label for="registerName">Full Name</label>
+            <input type="text" id="registerName" name="fullName" required placeholder="John Doe">
+          </div>
+          <div class="form-group">
+            <label for="registerEmail">Email</label>
+            <input type="email" id="registerEmail" name="email" required placeholder="you@example.com">
+          </div>
+          <div class="form-group">
+            <label for="registerPassword">Password</label>
+            <input type="password" id="registerPassword" name="password" required placeholder="••••••••">
+          </div>
+          <button type="submit" class="btn btn-primary btn-full">Sign Up</button>
+        </form>
+        <p class="form-toggle">Already have an account? <a href="#" id="toggleToLogin" class="toggle-link">Sign In</a></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dashboard Container -->
+  <div id="dashboardContainer" class="dashboard-container" style="display: none;">
+    <div class="dashboard-header">
+      <h1>My Resumes</h1>
+      <button id="createResumeBtn" class="btn btn-primary">+ Create Resume</button>
+    </div>
+
+    <div id="resumesList" class="resumes-grid">
+      <!-- Resume cards will be populated here -->
+    </div>
+  </div>
+
+  <!-- Resume Editor Modal -->
+  <div id="editorModal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="editorTitle">Create Resume</h2>
+        <button id="closeEditorBtn" class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="editor-container">
+          <!-- Form Section -->
+          <div class="editor-form-section">
+            <form id="resumeForm" class="resume-form">
+              <!-- Personal Details -->
+              <fieldset class="form-fieldset">
+                <legend>Personal Details</legend>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" id="firstName" name="firstName" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" id="lastName" name="lastName" required>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input type="tel" id="phone" name="phone">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="address">Address</label>
+                  <input type="text" id="address" name="address">
+                </div>
+                <div class="form-group">
+                  <label for="jobTitle">Job Title</label>
+                  <input type="text" id="jobTitle" name="jobTitle">
+                </div>
+              </fieldset>
+
+              <!-- Summary -->
+              <fieldset class="form-fieldset">
+                <legend>Professional Summary</legend>
+                <div class="form-group">
+                  <label for="summary">Summary</label>
+                  <textarea id="summary" name="summary" rows="4" placeholder="Brief professional summary..."></textarea>
+                </div>
+                <button type="button" id="generateSummaryBtn" class="btn btn-secondary btn-sm">Generate with AI</button>
+              </fieldset>
+
+              <!-- Experience -->
+              <fieldset class="form-fieldset">
+                <legend>Experience</legend>
+                <div id="experienceList"></div>
+                <button type="button" id="addExperienceBtn" class="btn btn-secondary btn-sm">+ Add Experience</button>
+              </fieldset>
+
+              <!-- Skills -->
+              <fieldset class="form-fieldset">
+                <legend>Skills</legend>
+                <div id="skillsList"></div>
+                <button type="button" id="addSkillBtn" class="btn btn-secondary btn-sm">+ Add Skill</button>
+              </fieldset>
+
+              <!-- Education -->
+              <fieldset class="form-fieldset">
+                <legend>Education</legend>
+                <div id="educationList"></div>
+                <button type="button" id="addEducationBtn" class="btn btn-secondary btn-sm">+ Add Education</button>
+              </fieldset>
+
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Save Resume</button>
+                <button type="button" id="cancelEditorBtn" class="btn btn-secondary">Cancel</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Preview Section -->
+          <div class="editor-preview-section">
+            <div id="resumePreview" class="resume-preview">
+              <!-- Elite 2025 resume will render here -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast" style="display: none;"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+</body>
 </html>

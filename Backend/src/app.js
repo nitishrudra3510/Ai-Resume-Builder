@@ -67,4 +67,9 @@ app.use(cors(corsOptions));
 app.use("/api/users", userRouter);
 app.use("/api/resumes", resumeRouter);
 
+// Root route: redirect to API resume start route to avoid "Cannot GET /"
+app.get('/', (req, res) => {
+  return res.redirect('/api/resumes/');
+});
+
 export default app;
