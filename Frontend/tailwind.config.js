@@ -17,6 +17,10 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ["Inter", "ui-sans-serif", "system-ui"],
+        display: ["Playfair Display", "serif"],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -51,6 +55,8 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        navy: '#0f172a',
+        'page-bg': '#f9fafb',
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -66,10 +72,18 @@ module.exports = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        'underline-swipe': {
+          '0%': { width: '0%' },
+          '100%': { width: '100%' },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        'underline-swipe': 'underline-swipe 350ms ease-in-out',
+      },
+      backgroundImage: {
+        'name-gradient': 'linear-gradient(90deg, #4f46e5, #7c3aed)',
       },
     },
   },

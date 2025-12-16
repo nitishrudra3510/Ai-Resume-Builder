@@ -2,6 +2,25 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import Resume from "../models/resume.model.js";
 
+// AI model and simple in-memory cache (2 minutes TTL)
+const AI_MODEL = "gemini-1.5-flash";
+const aiResponseCache = new Map(); // key -> { ts, value }
+const AI_CACHE_TTL_MS = 2 * 60 * 1000; // 2 minutes
+
+export function getCachedAIResponse(key) {
+  const entry = aiResponseCache.get(key);
+  if (!entry) return null;
+  if (Date.now() - entry.ts > AI_CACHE_TTL_MS) {
+    aiResponseCache.delete(key);
+    return null;
+  }
+  return entry.value;
+}
+
+export function setCachedAIResponse(key, value) {
+  aiResponseCache.set(key, { ts: Date.now(), value });
+}
+
 const start = async (req, res) => {
   return res
     .status(200)

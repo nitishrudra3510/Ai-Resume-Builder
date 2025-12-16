@@ -1,107 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Playfair+Display:wght@400;700;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Page background */
+body {
+  @apply bg-[var(--page-bg, #f9fafb)] text-gray-900;
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+}
+
 @media print {
-  #noPrint {
-    display: none;
-  }
-  #print {
-    display: block;
-  }
-  #printHeader {
-    display: none;
-  }
-  body {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+  #noPrint { display: none; }
+  #print { display: block; }
+  #printHeader { display: none; }
+  body { margin: 0; padding: 0; box-sizing: border-box; }
 }
 
-@page {
-  size: A4;
-  margin: 0;
+@page { size: A4; margin: 0; }
+
+/* Name gradient and hover underline */
+.elite-name {
+  font-family: 'Playfair Display', serif;
+  font-weight: 800;
+  font-size: 38pt;
+  line-height: 1;
+  background: linear-gradient(90deg, #4f46e5, #7c3aed);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: relative;
+}
+.elite-name:hover::after {
+  width: 100%;
+}
+.elite-name::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  height: 3px;
+  width: 0%;
+  background: linear-gradient(90deg, #4f46e5, #7c3aed);
+  transition: width 320ms cubic-bezier(.2,.9,.2,1);
 }
 
-@layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
-
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 98%;
-
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
-
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
-
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 0% 3.9%;
-
-    --radius: 0.5rem;
-  }
-
-  .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
-
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
-
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
-
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
-
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
-  }
+/* Glassmorphism card */
+.glass-card {
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(6px) saturate(120%);
+  -webkit-backdrop-filter: blur(6px) saturate(120%);
+  border: 1px solid rgba(255,255,255,0.5);
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+  border-radius: 12px;
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-}
-.rsw-ce ul {
-  list-style: disc;
-  padding-left: 2em;
+/* Skill pills */
+.skill-pill {
+  @apply inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium;
+  background: rgba(124,58,237,0.1);
+  color: #6b21a8;
 }
 
-.rsw-ce ol {
-  list-style: decimal;
-  padding-left: 2em;
-}
+.skill-pill.indigo { background: rgba(79,70,229,0.09); color: #3730a3; }
+.skill-pill.green { background: rgba(34,197,94,0.09); color: #15803d; }
+.skill-pill.gray { background: rgba(107,114,128,0.08); color: #374151; }
+
+/* Progress bar */
+.skill-bar { height: 8px; background: rgba(15,23,42,0.06); border-radius: 999px; overflow: hidden; }
+.skill-bar > i { display: block; height: 100%; background: linear-gradient(90deg,#4f46e5,#7c3aed); }
+
+/* Responsive resume wrapper */
+.resume-shell { min-height: 100vh; padding: 2rem; background-color: #f9fafb; }
+.resume-card { max-width: 1200px; margin: 0 auto; display: flex; gap: 2rem; }
+
+/* Sidebar */
+.resume-sidebar { width: 20%; min-width: 220px; background: #0f172a; color: #fff; padding: 1.25rem; border-radius: 10px; }
+.resume-main { width: 80%; background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 8px 30px rgba(15,23,42,0.06); }
+
+/* Section heading */
+.section-heading { font-family: 'Playfair Display', serif; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; }
+.section-title-accent { height: 4px; width: 56px; background: linear-gradient(90deg,#4f46e5,#7c3aed); margin-top:0.5rem; border-radius: 4px; }
+
+.contact-item { font-size: 0.85rem; color: rgba(255,255,255,0.9); }
+
+.job-line { display:flex; justify-content:space-between; align-items:center; gap:8px; }
+.job-company { font-style: italic; color: #374151; }
+
+.no-print { display: none; }
