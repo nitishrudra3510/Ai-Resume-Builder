@@ -18,7 +18,8 @@ function App() {
     const fetchResponse = async () => {
       try {
         const response = await startUser();
-        if (response.statusCode == 200) {
+        if (response.statusCode == 200) 
+          {
           dispatch(addUserData(response.data));
         } else {
           dispatch(addUserData(""));
