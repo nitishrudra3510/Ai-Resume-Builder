@@ -4,7 +4,7 @@
 
 AI Resume Builder is a modern web application that combines artificial intelligence with an intuitive interface to help users create professional resumes that pass through Applicant Tracking Systems (ATS). The application features real-time previews, AI content generation, and instant PDF export.
 
----
+
 
 ## 🛠️ Tech Stack
 
@@ -15,7 +15,7 @@ AI Resume Builder is a modern web application that combines artificial intellige
 | **AI/ML** | Google Generative AI (Gemini 1.5 Flash) |
 | **Performance** | Gzip Compression, Rate Limiting (100 req/sec), 2-min In-Memory Caching |
 
----
+
 
 ## ⚡ Key Features
 
@@ -102,7 +102,7 @@ npm start
 ### Done! 🎉
 Open browser → `http://localhost:8000` → Register → Create resume!
 
----
+
 
 ## ⚙️ Environment Variables
 
