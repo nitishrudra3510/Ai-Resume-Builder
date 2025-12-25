@@ -13,14 +13,14 @@ const app = express();
 // Compression middleware for response compression
 app.use(compression());
 
-// Rate limiting middleware (100 requests per second)
+
 const rateLimit = (req, res, next) => {
   const now = Date.now();
   if (!req.ip) {
     req.ip = req.connection.remoteAddress;
   }
   
-  // Initialize rate limit store if it doesn't exist
+
   if (!global.rateLimitStore) {
     global.rateLimitStore = {};
   }
@@ -68,6 +68,7 @@ app.use("/api/users", userRouter);
 app.use("/api/resumes", resumeRouter);
 
 // Root route: redirect to API resume start route to avoid "Cannot GET /"
+
 app.get('/', (req, res) => {
   return res.redirect('/api/resumes/');
 });
