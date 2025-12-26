@@ -1,4 +1,3 @@
-// models/Education.js
 import mongoose from "mongoose";
 
 const { Schema } = mongoose;
@@ -20,6 +19,7 @@ const educationSchema = new Schema({
     type: String,
     default: null,
   },
+  
   endDate: {
     type: String,
     default: null,
