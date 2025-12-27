@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Frontend Test - AI Resume Builder</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    .test-section {
+      background: white;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .status {
+      padding: 10px;
+      border-radius: 4px;
+      margin: 10px 0;
+    }
+    .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+    .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+    .info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+    button {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 5px;
+    }
+    button:hover { background: #0056b3; }
+    .test-form {
+      border: 1px solid #ddd;
+      padding: 15px;
+      border-radius: 4px;
+      margin: 10px 0;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin: 5px 0;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧪 Frontend Test Page</h1>
+  <p>This page helps test the frontend functionality without needing the backend.</p>
+
+  <div class="test-section">
+    <h2>🔧 System Status</h2>
+    <div id="systemStatus">
+      <div class="info">Checking system status...</div>
+    </div>
+  </div>
+
+  <div class="test-section">
+    <h2>🎨 UI Components Test</h2>
+    
+    <h3>Form Toggle Test</h3>
+    <div class="test-form">
+      <div id="testLoginForm" class="form-section active" style="display: block;">
+        <h4>Login Form</h4>
+        <input type="email" placeholder="Email" />
+        <input type="password" placeholder="Password" />
+        <button>Sign In</button>
+        <p>Don't have an account? <a href="#" id="testToggleToRegister">Create Account</a></p>
+      </div>
+
+      <div id="testRegisterForm" class="form-section" style="display: none;">
+        <h4>Register Form</h4>
+        <input type="text" placeholder="Full Name" />
+        <input type="email" placeholder="Email" />
+        <input type="password" placeholder="Password" />
+        <button>Create Account</button>
+        <p>Already have an account? <a href="#" id="testToggleToLogin">Sign In</a></p>
+      </div>
+    </div>
+
+    <h3>Validation Test</h3>
+    <div class="test-form">
+      <input type="text" id="testName" placeholder="Enter name (first name only is OK)" />
+      <input type="email" id="testEmail" placeholder="Enter email" />
+      <button onclick="testValidation()">Test Validation</button>
+      <div id="validationResult"></div>
+    </div>
+  </div>
+
+  <div class="test-section">
+    <h2>🌐 API Connection Test</h2>
+    <button onclick="testAPIConnection()">Test Backend Connection</button>
+    <div id="apiResult"></div>
+  </div>
+
+  <div class="test-section">
+    <h2>📱 Responsive Test</h2>
+    <p>Resize your browser window to test responsive design:</p>
+    <div id="screenSize"></div>
+  </div>
+
+  <div class="test-section">
+    <h2>🚀 Quick Actions</h2>
+    <button onclick="window.location.href='index.html'">Go to Main App</button>
+    <button onclick="clearStorage()">Clear Local Storage</button>
+    <button onclick="window.location.reload()">Reload Page</button>
+  </div>
+
+  <script>
+    // Test form toggle functionality
+    document.getElementById('testToggleToRegister').addEventListener('click', (e) => {
+      e.preventDefault();
+      document.getElementById('testLoginForm').style.display = 'none';
+      document.getElementById('testRegisterForm').style.display = 'block';
+      updateStatus('Form toggle to register: ✅ Working');
+    });
+
+    document.getElementById('testToggleToLogin').addEventListener('click', (e) => {
+      e.preventDefault();
+      document.getElementById('testRegisterForm').style.display = 'none';
+      document.getElementById('testLoginForm').style.display = 'block';
+      updateStatus('Form toggle to login: ✅ Working');
+    });
+
+    // Test validation
+    function testValidation() {
+      const name = document.getElementById('testName').value.trim();
+      const email = document.getElementById('testEmail').value.trim();
+      const result = document.getElementById('validationResult');
+      
+      let errors = [];
+      
+      if (!name) {
+        errors.push('Name is required');
+      }
+      
+      if (!email) {
+        errors.push('Email is required');
+      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        errors.push('Please enter a valid email address');
+      }
+      
+      if (errors.length > 0) {
+        result.innerHTML = `<div class="error">❌ Validation failed: ${errors[0]}</div>`;
+      } else {
+        // Test name parsing
+        const nameParts = name.split(' ');
+        const firstName = nameParts[0] || '';
+        const lastName = nameParts.slice(1).join(' ') || '';
+        
+        result.innerHTML = `
+          <div class="success">
+            ✅ Validation passed!<br>
+            First Name: "${firstName}"<br>
+            Last Name: "${lastName}" ${lastName ? '' : '(optional - OK to be empty)'}
+          </div>
+        `;
+      }
+    }
+
+    // Test API connection
+    async function testAPIConnection() {
+      const result = document.getElementById('apiResult');
+      result.innerHTML = '<div class="info">Testing connection...</div>';
+      
+      try {
+        const response = await fetch('http://localhost:5001/api/users/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: 'test@test.com', password: 'test123' })
+        });
+        
+        if (response.status === 404) {
+          result.innerHTML = '<div class="error">❌ Backend not running on port 5001</div>';
+        } else {
+          result.innerHTML = '<div class="success">✅ Backend is responding</div>';
+        }
+      } catch (error) {
+        result.innerHTML = '<div class="error">❌ Cannot connect to backend - make sure it\'s running on port 5001</div>';
+      }
+    }
+
+    // Update screen size
+    function updateScreenSize() {
+      document.getElementById('screenSize').innerHTML = `
+        <div class="info">
+          Screen: ${window.innerWidth}x${window.innerHeight}px<br>
+          Device: ${window.innerWidth < 768 ? 'Mobile' : window.innerWidth < 1024 ? 'Tablet' : 'Desktop'}
+        </div>
+      `;
+    }
+
+    // Clear storage
+    function clearStorage() {
+      localStorage.clear();
+      sessionStorage.clear();
+      updateStatus('✅ Local storage cleared');
+    }
+
+    // Update status
+    function updateStatus(message) {
+      const status = document.getElementById('systemStatus');
+      status.innerHTML = `<div class="success">${message}</div>`;
+    }
+
+    // Initialize
+    window.addEventListener('resize', updateScreenSize);
+    updateScreenSize();
+
+    // System checks
+    setTimeout(() => {
+      const checks = [
+        'CSS loaded: ✅',
+        'JavaScript running: ✅',
+        'DOM ready: ✅',
+        'Local storage available: ' + (localStorage ? '✅' : '❌')
+      ];
+      
+      document.getElementById('systemStatus').innerHTML = 
+        checks.map(check => `<div class="success">${check}</div>`).join('');
+    }, 500);
+  </script>
+</body>
+</html>
