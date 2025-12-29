@@ -65,12 +65,14 @@ A modern, full-stack web application for creating professional resumes with AI a
    npm start
    ```
 
+
 3. **Setup Frontend**
    ```bash
    cd Frontend
    npm install
    npm start
    ```
+
 
 4. **Access the Application**
    - Frontend: `http://localhost:8000`
